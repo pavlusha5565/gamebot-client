@@ -1,8 +1,10 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 Also add scss, bootstrap(+ react-bootstrap), mobx.
-Stylelint require to lint css (vscode extention available).
+
+Stylelint (as devDependency) require to lint css (vscode extention available).
 
 ## Available Scripts
 
