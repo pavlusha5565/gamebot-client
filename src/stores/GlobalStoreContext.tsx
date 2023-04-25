@@ -1,8 +1,13 @@
 import React from "react";
+import { AuthStore } from "./AuthStore";
 
-export interface IStoreContext {}
+export interface IStoreContext {
+  authStore: AuthStore;
+}
 
-const stores = {};
+const stores = {
+  authStore: new AuthStore(),
+};
 
 export const StoreContext = React.createContext<IStoreContext>(stores);
 
@@ -12,6 +17,10 @@ export function StoreProvider({ children }: { children: React.ReactElement }) {
   );
 }
 
-export function useGlobalStore(store?: string): IStoreContext {
+export function useGlobalStore(): IStoreContext {
   return React.useContext<IStoreContext>(StoreContext);
+}
+
+export function useStore(store: keyof IStoreContext) {
+  return React.useContext<IStoreContext>(StoreContext)[store];
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Routes } from "../../routes";
+import { Routes } from "../../../routes";
 
 export function Header() {
   const routes = Routes.map((item) => {
@@ -22,7 +22,7 @@ export function Header() {
             </Nav.Link>
             <NavDropdown title="Global links" id="basic-nav-dropdown">
               {routes.map((path, key) => (
-                <NavDropdown.Item as={Link} to={path || "/"}>
+                <NavDropdown.Item key={key} as={Link} to={path || "/"}>
                   {path}
                 </NavDropdown.Item>
               ))}
