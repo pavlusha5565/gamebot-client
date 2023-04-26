@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Routes } from "../../../routes";
+import { Routes } from "../../routes";
 
 export function Header() {
   const routes = Routes.map((item) => {

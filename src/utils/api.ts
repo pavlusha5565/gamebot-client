@@ -25,12 +25,13 @@ export async function request<T>(
     method: "GET",
     headers: {
       "content-type": "application/json;charset=UTF-8",
+      ...(configProps?.headers || {}),
     },
     body: JSON.stringify(body),
     ...configProps,
   };
   const response = await fetch(makeApiEndpoint(url), config);
-  const data = response.json() as T;
+  const data = (await response.json()) as T;
 
   return {
     data: response.ok ? data : null,

@@ -9,6 +9,9 @@ const stores = {
   authStore: new AuthStore(),
 };
 
+// @ts-ignore
+window.stores = stores;
+
 export const StoreContext = React.createContext<IStoreContext>(stores);
 
 export function StoreProvider({ children }: { children: React.ReactElement }) {
