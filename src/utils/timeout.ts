@@ -1,3 +1,5 @@
+import { Noop } from "../types/utils/objects";
+
 export function trottle<F extends Function = (...arg: any[]) => {}>(
   cb: F,
   delay: number

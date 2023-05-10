@@ -1,0 +1,18 @@
+@import "../../styles/index.scss";
+
+.Header__profile {
+  width: 42px;
+  max-width: 42px;
+  height: 42px;
+  background-color: $cyan-200;
+  border-radius: $border-radius-pill;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  svg {
+    width: 42px;
+    height: 42px;
+    color: $gray-900;
+  }
+}

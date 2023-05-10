@@ -1,12 +1,24 @@
 import React from "react";
 import { AuthStore } from "./AuthStore";
+import { apiUrl } from "../config";
+import { Api } from "./Api/Api";
 
 export interface IStoreContext {
+  apiClient: Api;
   authStore: AuthStore;
 }
 
+const authStore = new AuthStore();
+const apiWithAuth = new Api(apiUrl);
+
+apiWithAuth.applyMiddleware([
+  waitUntilTokenUpdate(authStore),
+  setAuthHeader(authStore),
+]);
+
 const stores = {
-  authStore: new AuthStore(),
+  apiClient: apiWithAuth,
+  authStore: authStore,
 };
 
 // @ts-ignore
@@ -24,6 +36,8 @@ export function useGlobalStore(): IStoreContext {
   return React.useContext<IStoreContext>(StoreContext);
 }
 
-export function useStore(store: keyof IStoreContext) {
-  return React.useContext<IStoreContext>(StoreContext)[store];
+export function useStore<T extends IStoreContext[keyof IStoreContext]>(
+  store: keyof IStoreContext
+): T {
+  return React.useContext<IStoreContext>(StoreContext)[store] as T;
 }

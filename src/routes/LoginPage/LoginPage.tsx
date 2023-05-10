@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import s from "./LoginPage.module.scss";
+import { AuthStore } from "../../stores/AuthStore";
 
 export interface IloginData {
   login: string;
@@ -25,7 +26,7 @@ const formResolver = yupResolver(
 );
 
 export default observer(function LoginPage() {
-  const authStore = useStore("authStore");
+  const authStore = useStore<AuthStore>("authStore");
   const navigate = useNavigate();
   const {
     register,
