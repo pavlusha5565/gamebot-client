@@ -11,8 +11,6 @@ export interface ITokenPayload {
   sessionId: string;
 }
 
-const SESSION_KEY = "session";
-
 export class AuthStore {
   _session: Session | null = null;
   _authToken: string | null = null;
@@ -26,11 +24,6 @@ export class AuthStore {
     makeAutoObservable(this);
 
     this.apiInstanse = new Api(apiUrl);
-
-    this._session = this.getLocalStorage<Session>(SESSION_KEY);
-    autorun(() => {
-      this.setLocalStorage(SESSION_KEY, this.session);
-    });
   }
 
   async login(email: string, password: string): Promise<IResponse<Session>> {
@@ -117,18 +110,6 @@ export class AuthStore {
       return false;
     }
     return true;
-  }
-
-  setLocalStorage(key: string, data: object | null) {
-    if (!data) {
-      localStorage.removeItem(key);
-      return;
-    }
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-
-  getLocalStorage<T extends object = object>(key: string): T | null {
-    return JSON.parse(localStorage.getItem(key) || "null");
   }
 
   get isAuth(): boolean {

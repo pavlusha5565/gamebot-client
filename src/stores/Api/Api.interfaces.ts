@@ -5,6 +5,8 @@ export enum ERequestMethod {
   get = "GET",
   post = "POST",
   delete = "DELETE",
+  put = "PUT",
+  update = "UPDATE",
 }
 
 export interface IApiConfig {

@@ -2,33 +2,36 @@ import React from "react";
 import { AuthStore } from "./AuthStore";
 import { apiUrl } from "../config";
 import { Api } from "./Api/Api";
+import { LocalStorageStore } from "./LocalStorageStore";
 
 export interface IStoreContext {
   apiClient: Api;
   authStore: AuthStore;
+  localStorageStore: LocalStorageStore;
 }
 
 const authStore = new AuthStore();
 const apiWithAuth = new Api(apiUrl);
+const localStorageStore = new LocalStorageStore();
 
-apiWithAuth.applyMiddleware([
-  waitUntilTokenUpdate(authStore),
-  setAuthHeader(authStore),
-]);
+apiWithAuth.applyMiddleware([]);
 
-const stores = {
+export const globalStores: IStoreContext = {
   apiClient: apiWithAuth,
   authStore: authStore,
+  localStorageStore: localStorageStore,
 };
 
 // @ts-ignore
-window.stores = stores;
+window.stores = globalStores;
 
-export const StoreContext = React.createContext<IStoreContext>(stores);
+export const StoreContext = React.createContext<IStoreContext>(globalStores);
 
 export function StoreProvider({ children }: { children: React.ReactElement }) {
   return (
-    <StoreContext.Provider value={stores}>{children}</StoreContext.Provider>
+    <StoreContext.Provider value={globalStores}>
+      {children}
+    </StoreContext.Provider>
   );
 }
 

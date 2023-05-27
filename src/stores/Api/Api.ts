@@ -33,7 +33,6 @@ export class Api {
           ...this._configBase.headers,
           ...(config?.headers || {}),
         },
-        body: config?.variables ? JSON.stringify(config.variables) : null,
       }
     );
 
@@ -44,6 +43,16 @@ export class Api {
 
     const response = await fetch(context.url, context.getContext);
     return this.parseResponse(response);
+  }
+
+  async get<T>(
+    url: string,
+    options: Omit<IApiConfig, "method">
+  ): Promise<IResponse<T>> {
+    return await this.makeRequest<T>(url, {
+      ...options,
+      method: ERequestMethod.get,
+    });
   }
 
   apiEndpoint(url: string, ...urls: string[]): string {
