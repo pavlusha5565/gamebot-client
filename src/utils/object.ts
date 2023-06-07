@@ -1,4 +1,5 @@
 import { Shape } from "../types/utils/objects";
+import { getErrorMessage } from "./Errors";
 
 export function parseJwt<T>(token: string): T & { exp: number; iat: number } {
   var base64Url = token.split(".")[1];
@@ -19,11 +20,19 @@ export function parseJwt<T>(token: string): T & { exp: number; iat: number } {
 export function applyObject<T extends object = Shape>(source: T, target: T): T {
   const keys = Object.keys(target) as Array<keyof T>;
   for (const key of keys) {
-    if () {
-      
-    }
-
     source[key] = target[key];
   }
   return source;
+}
+
+export function tryParseJson<T = any>(
+  json: string | null
+): { data: T | null; error: string | null } {
+  try {
+    const parsed = JSON.parse(json || "null");
+    return { data: parsed, error: null };
+  } catch (err) {
+    console.error("Ошибка в преобразовании json");
+    return { data: null, error: getErrorMessage(err) };
+  }
 }

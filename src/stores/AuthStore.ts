@@ -1,5 +1,5 @@
 import { Session } from "../types/dto/auth.dto";
-import { autorun, makeAutoObservable, runInAction, toJS } from "mobx";
+import { makeAutoObservable, runInAction, toJS } from "mobx";
 import { apiUrl } from "../config";
 import { parseJwt } from "../utils/object";
 import { Api } from "./Api/Api";
@@ -17,8 +17,6 @@ export class AuthStore {
   _isUpdateAuth: boolean = false;
 
   apiInstanse: Api;
-
-  timeoutRef: NodeJS.Timeout | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -112,6 +110,24 @@ export class AuthStore {
     return true;
   }
 
+  set isUpdateAuth(state: boolean) {
+    runInAction(() => {
+      this._isUpdateAuth = state;
+    });
+  }
+
+  set authToken(token: string | null) {
+    runInAction(() => {
+      this._authToken = token;
+    });
+  }
+
+  set session(session: Session | null) {
+    runInAction(() => {
+      this._session = session;
+    });
+  }
+
   get isAuth(): boolean {
     if (!this.authToken || !this.session) {
       return false;
@@ -123,12 +139,6 @@ export class AuthStore {
       return false;
     }
     return true;
-  }
-
-  set isUpdateAuth(state: boolean) {
-    runInAction(() => {
-      this._isUpdateAuth = state;
-    });
   }
 
   get bearerRefresh(): string {
@@ -146,19 +156,7 @@ export class AuthStore {
     return toJS(this._authToken);
   }
 
-  set authToken(token: string | null) {
-    runInAction(() => {
-      this._authToken = token;
-    });
-  }
-
   get session(): Session | null {
     return toJS(this._session);
-  }
-
-  set session(session: Session | null) {
-    runInAction(() => {
-      this._session = session;
-    });
   }
 }

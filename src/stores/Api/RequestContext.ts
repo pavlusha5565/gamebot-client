@@ -10,9 +10,7 @@ export class RequestContext {
   context: RequestInit = requestDefault;
 
   constructor(url: string, init: RequestInit) {
-    this.context = {
-      ...init,
-    };
+    this.context = init;
     this.url = url;
   }
 

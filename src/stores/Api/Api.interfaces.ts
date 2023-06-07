@@ -30,7 +30,4 @@ export interface IResponse<T = any> {
   response: Response;
 }
 
-export type TApiMiddleware = (
-  context: RequestContext,
-  request: RequestInit
-) => RequestInit | Promise<RequestInit> | null | undefined;
+export type TApiMiddleware = (context: RequestContext) => Promise<void> | void;

@@ -37,22 +37,11 @@ export class Api {
     );
 
     for (let i = 0; i < this._middlewares.length; i++) {
-      const update = await this._middlewares[i](context, context.getContext);
-      context.setContext(update);
+      await this._middlewares[i](context);
     }
 
     const response = await fetch(context.url, context.getContext);
     return this.parseResponse(response);
-  }
-
-  async get<T>(
-    url: string,
-    options: Omit<IApiConfig, "method">
-  ): Promise<IResponse<T>> {
-    return await this.makeRequest<T>(url, {
-      ...options,
-      method: ERequestMethod.get,
-    });
   }
 
   apiEndpoint(url: string, ...urls: string[]): string {

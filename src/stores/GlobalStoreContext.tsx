@@ -3,6 +3,8 @@ import { AuthStore } from "./AuthStore";
 import { apiUrl } from "../config";
 import { Api } from "./Api/Api";
 import { LocalStorageStore } from "./LocalStorageStore";
+import { createSetAccessTokenContextLink } from "./Api/middlewares/setAccessTokenContext";
+import { refetchAccessToken } from "./Api/middlewares/refetchAccessToken";
 
 export interface IStoreContext {
   apiClient: Api;
@@ -12,6 +14,10 @@ export interface IStoreContext {
 
 const authStore = new AuthStore();
 const apiWithAuth = new Api(apiUrl);
+apiWithAuth.applyMiddleware([
+  refetchAccessToken(authStore),
+  createSetAccessTokenContextLink(authStore),
+]);
 const localStorageStore = new LocalStorageStore();
 
 apiWithAuth.applyMiddleware([]);

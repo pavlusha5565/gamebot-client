@@ -25,6 +25,9 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
     "stylelint": "^14.15.0",
     "stylelint-config-idiomatic-order": "^9.0.0",
     "stylelint-config-prettier-scss": "^0.0.1",
@@ -35,12 +38,20 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
-  "hooks": {
-    "pre-commit": "eslint ."
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "eslintConfig": {
     "extends": [
-      "react-app"
+      "react-app",
+      "plugin:react/recommended"
     ]
   },
   "browserslist": {
