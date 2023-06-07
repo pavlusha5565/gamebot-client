@@ -16,13 +16,22 @@ export class BehaviorStore<T extends object> {
   constructor() {
     makeObservable(this, {
       _data: observable,
+
       setData: action,
+      updateData: action,
+
       data: computed,
     });
   }
 
+  setData(update: T) {
+    runInAction(() => {
+      this._data = update;
+    });
+  }
+
   // Ummutable update action
-  setData(update: Partial<T> | TUpdateState<T>) {
+  updateData(update: Partial<T> | TUpdateState<T>) {
     runInAction(() => {
       const data = this.data;
 
