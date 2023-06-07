@@ -20,6 +20,7 @@ export class RequestStore<T extends object> {
       isLoading: observable,
 
       setData: action,
+      updateData: action,
       setError: action,
       setLoading: action,
 
@@ -29,7 +30,13 @@ export class RequestStore<T extends object> {
     });
   }
 
-  setData(data: T | null) {
+  setData(update: T) {
+    runInAction(() => {
+      this._data = update;
+    });
+  }
+
+  updateData(data: T | null) {
     runInAction(() => {
       if (!data) {
         this._data = null;
